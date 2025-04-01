@@ -13,8 +13,12 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<ApplicationDBContext>(options => {
     options.UseSqlServer("Password=Passw0rd;Persist Security Info=True;User ID=sa;Initial Catalog=master;Data Source=localhost;TrustServerCertificate=True");
 });
+builder.Services.AddControllers().AddNewtonsoftJson(options => {
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+});
 
 builder.Services.AddScoped<IStockRepo, StockRepository>();
+builder.Services.AddScoped<ICommentRepo, CommentRepository>();
 
 var app = builder.Build();
 
